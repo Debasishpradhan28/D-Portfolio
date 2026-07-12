@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark" style="scroll-padding-top: 5rem;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Full Stack Developer</title>
+    
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter for UI, JetBrains Mono for Code, Caveat for Sticky Notes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons (UI) -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <!-- Devicons (Tech Stack Logos) -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0F172A; /* slate-900 */
+            color: #F8FAFC; /* slate-50 */
+            overflow-x: hidden;
+            cursor: none; 
+        }
+        
+        /* Interactive Grid Background */
+        .bg-grid-pattern {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Global scrollbar */
+        ::-webkit-scrollbar { width: 10px; height: 10px; }
+        ::-webkit-scrollbar-track { background: #0F172A; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #06B6D4; }
+
+        /* Container specific scrollbar for Experience Section */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #06B6D4; }
+
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Fade-up animations */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Floating Project Glow & Hover */
+        .project-card {
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .project-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 30px 60px -15px rgba(6, 182, 212, 0.4);
+            border-color: #06B6D4;
+        }
+
+        /* Fallback cursor for mobile/touch devices */
+        @media (pointer: coarse) {
+            body { cursor: auto; }
+            #custom-cursor, #custom-cursor-follower { display: none !important; }
+        }
+
+        /* Animations for Hero Blobs */
+        @keyframes blob {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+        .animate-blob { animation: blob 7s infinite; }
+        .animation-delay-2000 { animation-delay: 2s; }
+        .font-handwriting { font-family: 'Caveat', cursive; }
+    </style>
+</head>
+<body class="antialiased selection:bg-cyan-500 selection:text-white relative">
+
+    <div class="bg-grid-pattern"></div>
+
+    <div id="custom-cursor" class="fixed w-3 h-3 bg-cyan-500 rounded-full pointer-events-none z-[10000] mix-blend-screen transition-transform duration-75 ease-out shadow-[0_0_15px_rgba(6,182,212,0.8)] top-0 left-0"></div>
+    <div id="custom-cursor-follower" class="fixed w-10 h-10 border border-cyan-500 rounded-full pointer-events-none z-[9999] transition-all duration-300 ease-out top-0 left-0"></div>
+
+    <nav class="fixed w-full z-50 bg-slate-900/80 backdrop-blur-xl border-b border-slate-800 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="#" class="interactive-element font-black text-2xl tracking-tighter text-slate-50 hover:text-cyan-400 transition-colors">
+                    &lt;Debasish Pradhan/&gt;
+                </a>
+                
+                <!-- Desktop Nav -->
+                <div class="hidden md:flex space-x-8 text-sm font-semibold text-slate-400 nav-links">
+                    <a href="#about" class="interactive-element hover:text-slate-50 transition-colors py-2 relative group">
+                        About
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-cyan-400 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#experience" class="interactive-element hover:text-slate-50 transition-colors py-2 relative group">
+                        Experience
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-cyan-400 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#projects" class="interactive-element hover:text-slate-50 transition-colors py-2 relative group">
+                        Work
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-cyan-400 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#certifications" class="interactive-element hover:text-slate-50 transition-colors py-2 relative group">
+                        Certifications
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-cyan-400 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                </div>
+
+                <!-- Contact Button -->
+                <div class="hidden md:block">
+                    <a href="#contact" class="interactive-element px-6 py-2.5 text-sm font-bold text-slate-900 bg-cyan-400 rounded-full hover:bg-cyan-300 transition-colors shadow-[0_0_15px_rgba(6,182,212,0.4)] hover:shadow-[0_0_25px_rgba(6,182,212,0.6)]">
+                        Let's Talk
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center interactive-element cursor-pointer" id="mobile-menu-btn">
+                    <i class="ph ph-list text-3xl text-slate-50 hover:text-cyan-400 transition-colors"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Nav Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-800/95 backdrop-blur-xl border-b border-slate-700 absolute w-full shadow-2xl">
+            <div class="px-6 pt-4 pb-6 space-y-4">
+                <a href="#about" class="interactive-element block text-lg font-semibold text-slate-300 hover:text-cyan-400">About</a>
+                <a href="#experience" class="interactive-element block text-lg font-semibold text-slate-300 hover:text-cyan-400">Experience</a>
+                <a href="#projects" class="interactive-element block text-lg font-semibold text-slate-300 hover:text-cyan-400">Work</a>
+                <a href="#certifications" class="interactive-element block text-lg font-semibold text-slate-300 hover:text-cyan-400">Certifications</a>
+                <a href="#contact" class="interactive-element block text-lg font-semibold text-cyan-400">Let's Talk</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section id="hero" class="relative min-h-screen flex flex-col justify-center overflow-hidden">
+            <!-- Background Decorative Elements -->
+            <div class="absolute top-20 -left-20 w-96 h-96 bg-cyan-600 rounded-full mix-blend-multiply filter blur-[120px] opacity-40 animate-blob"></div>
+            <div class="absolute top-40 -right-20 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-[120px] opacity-40 animate-blob animation-delay-2000"></div>
+
+            <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 w-full pt-20">
+                <div class="fade-up">
+                    <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-slate-800/80 border border-slate-700 mb-8 shadow-lg backdrop-blur-sm">
+                        <span class="relative flex h-3 w-3">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
+                        </span>
+                        <p class="text-slate-200 font-mono text-xs md:text-sm tracking-wide uppercase font-semibold">Available for new opportunities</p>
+                    </div>
+                    
+                    <!-- Massive Typography -->
+                    <h1 class="text-6xl md:text-8xl lg:text-[7.5rem] font-black tracking-tighter text-white mb-6 leading-[0.95]">
+                        Building<br/>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-400">Scalable</span><br/>
+                        Web Apps.
+                    </h1>
+                    
+                    <p class="text-lg md:text-2xl text-slate-300 max-w-2xl leading-relaxed mb-12 font-medium">
+                        I engineer seamless digital experiences, connecting intuitive React frontends with robust Node.js and Python backends.
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-6 items-center">
+                        <a href="resume/Debasish-resume-2026 .pdf" target="_blank" class="interactive-element px-8 py-4 text-base font-bold text-slate-900 bg-white rounded-full hover:bg-cyan-400 hover:text-slate-900 transition-all hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(6,182,212,0.5)]">
+                            <i class="ph ph-file-pdf mr-2"></i> Resume
+                        </a>
+                        <!-- Social Icons -->
+                        <div class="flex gap-4">
+                            <a href="https://github.com/Debasishpradhan28" target="_blank" rel="noopener noreferrer" class="interactive-element w-14 h-14 flex items-center justify-center rounded-full bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-cyan-400 hover:scale-110 transition-all hover:shadow-[0_0_15px_rgba(6,182,212,0.3)]" aria-label="GitHub">
+                                <i class="ph ph-github-logo text-3xl"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/debasish-pradhan-185508312/" target="_blank" rel="noopener noreferrer" class="interactive-element w-14 h-14 flex items-center justify-center rounded-full bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-cyan-400 hover:scale-110 transition-all hover:shadow-[0_0_15px_rgba(6,182,212,0.3)]" aria-label="LinkedIn">
+                                <i class="ph ph-linkedin-logo text-3xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50 animate-bounce">
+                <span class="text-xs font-mono uppercase tracking-widest text-slate-400">Scroll</span>
+                <i class="ph ph-arrow-down text-xl text-cyan-400"></i>
+            </div>
+        </section>
+
+        <section id="about" class="py-32 bg-slate-800/30 relative fade-up border-y border-slate-800">
+            <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                <div class="flex flex-col lg:flex-row gap-20">
+                    
+                    <!-- Text Side -->
+                    <div class="lg:w-1/2">
+                        <div class="flex items-center gap-6 mb-10">
+                            <h2 class="text-4xl md:text-5xl font-black text-white tracking-tight">About Me</h2>
+                            <div class="h-1 bg-slate-700 flex-grow rounded-full"></div>
+                        </div>
+                        <div class="space-y-6 text-xl text-slate-300 leading-relaxed">
+                            <p>
+                                I am a passionate developer who thrives on turning complex problems into elegant, user-friendly web applications. My journey started with tweaking HTML, and it has evolved into architecting full-stack solutions.
+                            </p>
+                            <p>
+                                Whether I am designing dynamic interfaces in <span class="text-cyan-400 font-semibold">React</span>, building resilient REST APIs with <span class="text-cyan-400 font-semibold">Express</span> and <span class="text-cyan-400 font-semibold">Flask</span>, or structuring NoSQL databases, I focus on clean code, performance, and scalable design. 
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Tech Stack Icons Grid -->
+                    <div class="lg:w-1/2 pt-4">
+                        <p class="font-mono text-sm text-cyan-400 font-bold mb-8 uppercase tracking-widest flex items-center gap-2">
+                            <i class="ph-fill ph-cpu text-xl"></i> Core Technologies
+                        </p>
+                        
+                        <div class="grid grid-cols-3 sm:grid-cols-4 gap-4 md:gap-6">
+                            <div class="interactive-element group flex flex-col items-center justify-center p-4 bg-slate-900 border border-slate-800 rounded-2xl hover:border-cyan-500 hover:bg-slate-800 hover:-translate-y-2 transition-all duration-300 shadow-sm hover:shadow-[0_10px_30px_rgba(6,182,212,0.15)]">
+                                <i class="devicon-html5-plain colored text-4xl mb-2 group-hover:scale-110 transition-transform"></i>
+                                <span class="text-xs font-mono text-slate-400 group-hover:text-slate-100">HTML5</span>
+                            </div>
+                            <div class="interactive-element group flex flex-col items-center justify-center p-4 bg-slate-900 border border-slate-800 rounded-2xl hover:border-cyan-500 hover:bg-slate-800 hover:-translate-y-2 transition-all duration-300 shadow-sm hover:shadow-[0_10px_30px_rgba(6,182,212,0.15)]">
+                                <i class="devicon-css3-plain colored text-4xl mb-2 group-hover:scale-110 transition-transform"></i>
+                                <span class="text-xs font-mono text-slate-400 group-hover:text-slate-100">CSS3</span>
+                            </div>
+                            <div class="interactive-element group flex flex-col items-center justify-center p-4 bg-slate-900 border border-slate-800 rounded-2xl hover:border-cyan-500 hover:bg-slate-800 hover:-translate-y-2 transition-all duration-300 shadow-sm hover:shadow-[0_10px_30px_rgba(6,182,212,0.15)]">
+                                <i class="devicon-javascript-plain colored text-4xl mb-2 group-hover:scale-110 transition-transform"></i>
+                                <span class="text-xs font-mono text-slate-400 group-hover:text-slate-100">JavaScript</span>
+                            </div>
+                            <div class="interactive-element group flex flex-col items-center justify-center p-4 bg-slate-900 border border-slate-800 rounded-2xl hover:border-cyan-500 hover:bg-slate-800 hover:-translate-y-2 transition-all duration-300 shadow-sm hover:shadow-[0_10px_30px_rgba(6,182,212,0.15)]">
+                                <i class="devicon-typescript-plain colored text-4xl mb-2 group-hover:scale-110 transition-transform"></i>
+                                <span class="text-xs font-mono text-slate-400 group-hover:text-slate-100">TypeScript</span>
+                            </div>
+                            <div class="interactive-element group flex flex-col items-center justify-center p-4 bg-slate-900 border border-slate-800 rounded-2xl hover:border-cyan-500 hover:bg-slate-800 hover:-translate-y-2 transition-all duration-300 shadow-sm hover:shadow-[0_10px_30px_rgba(6,182,212,0.15)]">
+                                <i class="devicon-react-original colored text-4xl mb-2 group-hover:scale-110 transition-transform"></i>
+                                <span class="text-xs font-mono text-slate-400 group-hover:text-slate-100">React</span>
+                            </div>
+                            <div class="interactive-element group flex flex-col items-center justify-center p-4 bg-slate-900 border border-slate-800 rounded-2xl hover:border-cyan-500 hover:bg-slate-800 hover:-translate-y-2 transition-all duration-300 shadow-sm hover:shadow-[0_10px_30px_rgba(6,182,212,0.15)]">
+                                <i class="devicon-nodejs-plain colored text-4xl mb-2 group-hover:scale-110 transition-transform"></i>
+                                <span class="text-xs font-mono text-slate-400 group-hover:text-slate-100">Node.js</span>
+                            </div>
+                            <div class="interactive-element group flex flex-col items-center justify-center p-4 bg-slate-900 border border-slate-800 rounded-2xl hover:border-cyan-500 hover:bg-slate-800 hover:-translate-y-2 transition-all duration-300 shadow-sm hover:shadow-[0_10px_30px_rgba(6,182,212,0.15)]">
+                                <i class="devicon-express-original text-white text-4xl mb-2 group-hover:scale-110 transition-transform"></i>
+                                <span class="text-xs font-mono text-slate-400 group-hover:text-slate-100">Express</span>
+                            </div>
+                            <div class="interactive-element group flex flex-col items-center justify-center p-4 bg-slate-900 border border-slate-800 rounded-2xl hover:border-cyan-500 hover:bg-slate-800 hover:-translate-y-2 transition-all duration-300 shadow-sm hover:shadow-[0_10px_30px_rgba(6,182,212,0.15)]">
+                                <i class="devicon-python-plain colored text-4xl mb-2 group-hover:scale-110 transition-transform"></i>
+                                <span class="text-xs font-mono text-slate-400 group-hover:text-slate-100">Python</span>
+                            </div>
+                            <div class="interactive-element group flex flex-col items-center justify-center p-4 bg-slate-900 border border-slate-800 rounded-2xl hover:border-cyan-500 hover:bg-slate-800 hover:-translate-y-2 transition-all duration-300 shadow-sm hover:shadow-[0_10px_30px_rgba(6,182,212,0.15)]">
+                                <i class="devicon-flask-original text-white text-4xl mb-2 group-hover:scale-110 transition-transform"></i>
+                                <span class="text-xs font-mono text-slate-400 group-hover:text-slate-100">Flask</span>
+                            </div>
+                            <div class="interactive-element group flex flex-col items-center justify-center p-4 bg-slate-900 border border-slate-800 rounded-2xl hover:border-cyan-500 hover:bg-slate-800 hover:-translate-y-2 transition-all duration-300 shadow-sm hover:shadow-[0_10px_30px_rgba(6,182,212,0.15)]">
+                                <i class="ph-fill ph-app-window text-[38px] text-red-500 mb-2 group-hover:scale-110 transition-transform"></i>
+                                <span class="text-xs font-mono text-slate-400 group-hover:text-slate-100">Streamlit</span>
+                            </div>
+                            <div class="interactive-element group flex flex-col items-center justify-center p-4 bg-slate-900 border border-slate-800 rounded-2xl hover:border-cyan-500 hover:bg-slate-800 hover:-translate-y-2 transition-all duration-300 shadow-sm hover:shadow-[0_10px_30px_rgba(6,182,212,0.15)]">
+                                <i class="devicon-mysql-plain colored text-4xl mb-2 group-hover:scale-110 transition-transform"></i>
+                                <span class="text-xs font-mono text-slate-400 group-hover:text-slate-100">MySQL</span>
+                            </div>
+                            <div class="interactive-element group flex flex-col items-center justify-center p-4 bg-slate-900 border border-slate-800 rounded-2xl hover:border-cyan-500 hover:bg-slate-800 hover:-translate-y-2 transition-all duration-300 shadow-sm hover:shadow-[0_10px_30px_rgba(6,182,212,0.15)]">
+                                <i class="devicon-mongodb-plain colored text-4xl mb-2 group-hover:scale-110 transition-transform"></i>
+                                <span class="text-xs font-mono text-slate-400 group-hover:text-slate-100">MongoDB</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="py-32 bg-slate-900 relative fade-up">
+            <div class="max-w-4xl mx-auto px-6 lg:px-8">
+                <div class="flex items-center gap-6 mb-16">
+                    <h2 class="text-4xl md:text-5xl font-black text-white tracking-tight">Experience</h2>
+                    <div class="h-1 bg-slate-800 flex-grow rounded-full"></div>
+                </div>
+
+                <!-- Scrollable Container for Experience -->
+                <div class="max-h-[500px] overflow-y-auto pr-4 custom-scrollbar relative">
+                    <div class="relative border-l-2 border-slate-800 ml-4 md:ml-6 space-y-12 pb-8 timeline-container pt-4">
+                        
+                        <!-- Experience Node 1 -->
+                        <div class="relative pl-10 md:pl-16 group interactive-element cursor-default">
+                            <div class="absolute w-5 h-5 rounded-full bg-slate-800 border-4 border-slate-700 -left-[11px] top-1 group-hover:border-cyan-500 group-hover:bg-cyan-500 transition-all duration-500 shadow-[0_0_0_8px_#0F172A] group-hover:shadow-[0_0_20px_rgba(6,182,212,0.6)] group-hover:scale-125 z-10"></div>
+                            
+                            <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-3">
+                                <h3 class="text-2xl font-bold text-slate-100 group-hover:text-cyan-400 transition-colors duration-300">CampusCrew</h3>
+                                <span class="font-mono text-sm text-cyan-400 font-bold mt-2 sm:mt-0 px-3 py-1 bg-cyan-400/10 rounded-full border border-cyan-400/20">Present</span>
+                            </div>
+                            <h4 class="text-lg font-semibold text-slate-400 mb-4 flex items-center gap-2">
+                                <i class="ph-fill ph-buildings"></i> Tech Innovations Inc.
+                            </h4>
+                            <p class="text-slate-300 text-lg leading-relaxed group-hover:text-slate-100 transition-colors duration-300">
+                                Updating....
+                            </p>
+                        </div>
+
+                        <!-- Experience Node 2 -->
+                        <div class="relative pl-10 md:pl-16 group interactive-element cursor-default">
+                            <div class="absolute w-5 h-5 rounded-full bg-slate-800 border-4 border-slate-700 -left-[11px] top-1 group-hover:border-cyan-500 group-hover:bg-cyan-500 transition-all duration-500 shadow-[0_0_0_8px_#0F172A] group-hover:shadow-[0_0_20px_rgba(6,182,212,0.6)] group-hover:scale-125 z-10"></div>
+                            
+                            <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-3">
+                                <h3 class="text-2xl font-bold text-slate-100 group-hover:text-cyan-400 transition-colors duration-300">AIML Virtual Internship</h3>
+                                <span class="font-mono text-sm text-slate-400 mt-2 sm:mt-0">Jan 2026 - Feb 2026</span>
+                            </div>
+                            <h4 class="text-lg font-semibold text-slate-400 mb-4 flex items-center gap-2">
+                                <i class="ph-fill ph-graduation-cap"></i> Edunet Foundation - IBM Skillsbuild
+                            </h4>
+                            <p class="text-slate-300 text-lg leading-relaxed group-hover:text-slate-100 transition-colors duration-300">
+                                Designed and deployed SkillFolio, an AI-driven platform combining ATS resume analysis, portfolio generation, and career coaching into a single workflow, enabling users to receive instant career recommendations and resume feedback.
+                            </p>
+                        </div>
+
+                         <!-- Add more items here and it will scroll neatly -->
+                         <div class="relative pl-10 md:pl-16 group interactive-element cursor-default">
+                            <div class="absolute w-5 h-5 rounded-full bg-slate-800 border-4 border-slate-700 -left-[11px] top-1 group-hover:border-cyan-500 group-hover:bg-cyan-500 transition-all duration-500 shadow-[0_0_0_8px_#0F172A] group-hover:shadow-[0_0_20px_rgba(6,182,212,0.6)] group-hover:scale-125 z-10"></div>
+                            
+                            <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-3">
+                                <h3 class="text-2xl font-bold text-slate-100 group-hover:text-cyan-400 transition-colors duration-300">CyberSecurity with GenAI Intern</h3>
+                                <span class="font-mono text-sm text-slate-400 mt-2 sm:mt-0">Dec 2025 - Jan 2026</span>
+                            </div>
+                            <h4 class="text-lg font-semibold text-slate-400 mb-4 flex items-center gap-2">
+                                <i class="ph-fill ph-git-merge"></i> Vodafone Idea Foundation 
+                            </h4>
+                            <p class="text-slate-300 text-lg leading-relaxed group-hover:text-slate-100 transition-colors duration-300">
+                                Developed an AI-Based Network Intrusion Detection System using Random Forest and Generative AI to classify malicious network traffic, achieving 95%+ detection accuracy and providing real-time, AI-generated threat explanations for security analysis.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="py-32 bg-slate-800/30 relative fade-up border-y border-slate-800 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-6 lg:px-8 mb-12">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-6">
+                        <h2 class="text-4xl md:text-5xl font-black text-white tracking-tight">Selected Work</h2>
+                    </div>
+                    
+                    <!-- Slider Controls -->
+                    <div class="flex gap-4">
+                        <button id="prevBtn" class="interactive-element w-14 h-14 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center text-slate-50 hover:bg-cyan-500 hover:border-cyan-500 hover:text-white transition-all hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] group z-10">
+                            <i class="ph ph-arrow-left text-2xl group-hover:-translate-x-1 transition-transform"></i>
+                        </button>
+                        <button id="nextBtn" class="interactive-element w-14 h-14 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center text-slate-50 hover:bg-cyan-500 hover:border-cyan-500 hover:text-white transition-all hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] group z-10">
+                            <i class="ph ph-arrow-right text-2xl group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Centered Carousel Track -->
+            <!-- Using padding to ensure the first and last cards can be centered exactly -->
+            <div class="w-full relative">
+                <div id="projectTrack" class="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar gap-8 px-[5vw] md:px-[calc(50vw-300px)] py-12" style="scroll-behavior: smooth;">
+                    
+                    <!-- Project Card 1: Full Stack E-commerce -->
+                    <div class="snap-center shrink-0 w-[90vw] md:w-[600px] bg-slate-900 border border-slate-800 rounded-3xl project-card group cursor-pointer interactive-element">
+                        <div class="h-80 bg-slate-800 relative overflow-hidden rounded-t-3xl border-b border-slate-800">
+                            <img src="assets/fintech.jpg" alt="Fintech Project" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            
+                            <!-- Dark Overlay & Actions -->
+                            <div class="absolute inset-0 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center gap-6 opacity-0 translate-y-8 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
+                                <a href="https://fintech-fraud-system-one.vercel.app" target="_blank" class="px-6 py-3 bg-cyan-500 text-white rounded-full font-bold shadow-lg hover:bg-cyan-400 hover:scale-105 transition-transform flex items-center gap-2">
+                                    <i class="ph-bold ph-globe"></i> Live App
+                                </a>
+                                <a href="https://github.com/Debasishpradhan28/fintech-fraud-system" target="_blank" class="px-6 py-3 bg-slate-800 text-slate-50 border border-slate-600 rounded-full font-bold shadow-lg hover:border-white hover:scale-105 transition-transform flex items-center gap-2">
+                                    <i class="ph-bold ph-github-logo"></i> Code
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-8 md:p-10">
+                            <p class="font-mono text-sm text-indigo-400 font-bold mb-3 tracking-widest uppercase flex items-center gap-2">
+                                <i class="ph-fill ph-money text-lg"></i> Full Stack App
+                            </p>
+                            <h3 class="text-3xl font-bold text-white mb-4">TrustGuard</h3>
+                            <p class="text-slate-400 text-lg mb-8 line-clamp-3 leading-relaxed">
+                                A comprehensive fintech platform featuring secure user authentication, payment processing, and a robust admin dashboard for financial fraud management.
+                            </p>
+                            <div class="flex flex-wrap gap-2 font-mono text-xs text-cyan-400 font-semibold">
+                                <span class="bg-cyan-500/10 px-3 py-1.5 rounded border border-cyan-500/20">React</span>
+                                <span class="bg-cyan-500/10 px-3 py-1.5 rounded border border-cyan-500/20">Node.js</span>
+                                <span class="bg-cyan-500/10 px-3 py-1.5 rounded border border-cyan-500/20">MongoDB</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project Card 2: Real-time Chat -->
+                    <div class="snap-center shrink-0 w-[90vw] md:w-[600px] bg-slate-900 border border-slate-800 rounded-3xl project-card group cursor-pointer interactive-element">
+                        <div class="h-80 bg-slate-800 relative overflow-hidden rounded-t-3xl border-b border-slate-800">
+                            <img src="assets/vois.jpg" alt="Chat Project" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center gap-6 opacity-0 translate-y-8 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
+                                <a href="https://huggingface.co/spaces/debasishP/voisProject" target="_blank" class="px-6 py-3 bg-cyan-500 text-white rounded-full font-bold shadow-lg hover:bg-cyan-400 hover:scale-105 transition-transform flex items-center gap-2">
+                                    <i class="ph-bold ph-globe"></i> Live App
+                                </a>
+                                <a href="https://github.com/Debasishpradhan28/AI-Based-Network-Intrusion-Detection-System" target="_blank" class="px-6 py-3 bg-slate-800 text-slate-50 border border-slate-600 rounded-full font-bold shadow-lg hover:border-white hover:scale-105 transition-transform flex items-center gap-2">
+                                    <i class="ph-bold ph-github-logo"></i> Code
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-8 md:p-10">
+                            <p class="font-mono text-sm text-cyan-400 font-bold mb-3 tracking-widest uppercase flex items-center gap-2">
+                                <i class="ph-fill ph-shield text-lg"></i> CyberSecurity & AI
+                            </p>
+                            <h3 class="text-3xl font-bold text-white mb-4">AI Network Intrusion Detection System</h3>
+                            <p class="text-slate-400 text-lg mb-8 line-clamp-3 leading-relaxed">
+                                Developed an AI-powered intrusion detection system that identifies and mitigates potential security threats in real-time.
+                            </p>
+                            <div class="flex flex-wrap gap-2 font-mono text-xs text-cyan-400 font-semibold">
+                                <span class="bg-cyan-500/10 px-3 py-1.5 rounded border border-cyan-500/20">Python</span>
+                                <span class="bg-cyan-500/10 px-3 py-1.5 rounded border border-cyan-500/20">huggingface</span>
+                                <span class="bg-cyan-500/10 px-3 py-1.5 rounded border border-cyan-500/20">Machine Learning</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project Card 3: AI Dashboard -->
+                    <div class="snap-center shrink-0 w-[90vw] md:w-[600px] bg-slate-900 border border-slate-800 rounded-3xl project-card group cursor-pointer interactive-element">
+                        <div class="h-80 bg-slate-800 relative overflow-hidden rounded-t-3xl border-b border-slate-800">
+                            <img src="assets/daa-algov.jpg" alt="Dashboard Project" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center gap-6 opacity-0 translate-y-8 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
+                                <a href="https://algovisualizer-1b44.onrender.com" target="_blank" class="px-6 py-3 bg-cyan-500 text-white rounded-full font-bold shadow-lg hover:bg-cyan-400 hover:scale-105 transition-transform flex items-center gap-2">
+                                    <i class="ph-bold ph-globe"></i> Live App
+                                </a>
+                                <a href="https://github.com/Debasishpradhan28/DAA-AlgoV" target="_blank" class="px-6 py-3 bg-slate-800 text-slate-50 border border-slate-600 rounded-full font-bold shadow-lg hover:border-white hover:scale-105 transition-transform flex items-center gap-2">
+                                    <i class="ph-bold ph-github-logo"></i> Code
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-8 md:p-10">
+                            <p class="font-mono text-sm text-indigo-400 font-bold mb-3 tracking-widest uppercase flex items-center gap-2">
+                                <i class="ph-fill ph-chart-polar text-lg"></i> Data Visualization & Analytics
+                            </p>
+                            <h3 class="text-3xl font-bold text-white mb-4">AlgoVisualizer</h3>
+                            <p class="text-slate-400 text-lg mb-8 line-clamp-3 leading-relaxed">
+                                Developed a data structure and algorithm visualizer helps to understand and visualize different data structures and algorithms.
+                            </p>
+                            <div class="flex flex-wrap gap-2 font-mono text-xs text-cyan-400 font-semibold">
+                                <span class="bg-cyan-500/10 px-3 py-1.5 rounded border border-cyan-500/20">Python</span>
+                                <span class="bg-cyan-500/10 px-3 py-1.5 rounded border border-cyan-500/20">Flask</span>
+                                <span class="bg-cyan-500/10 px-3 py-1.5 rounded border border-cyan-500/20">Gunicorn</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="certifications" class="py-32 bg-slate-900 relative fade-up">
+            <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                <div class="flex items-center gap-6 mb-16">
+                    <h2 class="text-4xl md:text-5xl font-black text-white tracking-tight">Certifications & Achievements</h2>
+                    <div class="h-1 bg-slate-800 flex-grow rounded-full"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 pt-10">
+                    
+                    <!-- Sticky Note 1 -->
+                    <div class="relative group interactive-element cursor-pointer">
+                        <!-- Masking Tape -->
+                        <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-16 h-6 bg-white/30 backdrop-blur-sm shadow-sm z-20 rotate-[-3deg] rounded-sm"></div>
+                        <!-- Note Body -->
+                        <div class="bg-yellow-100 text-slate-800 p-8 shadow-[0_10px_20px_rgba(0,0,0,0.3)] transform rotate-2 transition-all duration-400 group-hover:rotate-0 group-hover:scale-110 group-hover:shadow-[0_25px_50px_rgba(0,0,0,0.5)] group-hover:z-30 min-h-[260px] flex flex-col justify-between rounded-br-[2rem]">
+                            <div>
+                                <h3 class="text-3xl font-bold mb-3 font-handwriting leading-tight">Foundation of Data Science</h3>
+                                <p class="text-slate-600 text-sm font-semibold">Coursera / Google</p>
+                            </div>
+                            <div class="flex justify-between items-end mt-6 border-t border-yellow-200 pt-4">
+                                <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Dec 2025</span>
+                                <i class="ph-fill ph-certificate text-3xl text-yellow-500"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sticky Note 2 -->
+                    <div class="relative group interactive-element cursor-pointer mt-4 md:mt-0">
+                        <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-16 h-6 bg-white/30 backdrop-blur-sm shadow-sm z-20 rotate-[2deg] rounded-sm"></div>
+                        <div class="bg-pink-100 text-slate-800 p-8 shadow-[0_10px_20px_rgba(0,0,0,0.3)] transform -rotate-2 transition-all duration-400 group-hover:rotate-0 group-hover:scale-110 group-hover:shadow-[0_25px_50px_rgba(0,0,0,0.5)] group-hover:z-30 min-h-[260px] flex flex-col justify-between rounded-bl-[2rem]">
+                            <div>
+                                <h3 class="text-3xl font-bold mb-3 font-handwriting leading-tight">Machine Learning with python</h3>
+                                <p class="text-slate-600 text-sm font-semibold">Coursera / IBM</p>
+                            </div>
+                            <div class="flex justify-between items-end mt-6 border-t border-pink-200 pt-4">
+                                <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Jan 2026</span>
+                                <i class="ph-fill ph-certificate text-3xl text-pink-500"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sticky Note 3 -->
+                    <div class="relative group interactive-element cursor-pointer mt-4 lg:mt-0">
+                        <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-16 h-6 bg-white/30 backdrop-blur-sm shadow-sm z-20 rotate-[-1deg] rounded-sm"></div>
+                        <div class="bg-blue-100 text-slate-800 p-8 shadow-[0_10px_20px_rgba(0,0,0,0.3)] transform rotate-1 transition-all duration-400 group-hover:rotate-0 group-hover:scale-110 group-hover:shadow-[0_25px_50px_rgba(0,0,0,0.5)] group-hover:z-30 min-h-[260px] flex flex-col justify-between rounded-br-[2rem]">
+                            <div>
+                                <h3 class="text-3xl font-bold mb-3 font-handwriting leading-tight">AI in Cybersecurity Fundamentals</h3>
+                                <p class="text-slate-600 text-sm font-semibold">paloalto networks</p>
+                            </div>
+                            <div class="flex justify-between items-end mt-6 border-t border-blue-200 pt-4">
+                                <span class="text-xs font-bold uppercase tracking-wider text-slate-500">may 2026</span>
+                                <i class="ph-fill ph-certificate text-3xl text-blue-500"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative group interactive-element cursor-pointer mt-4 lg:mt-0">
+                        <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-16 h-6 bg-white/30 backdrop-blur-sm shadow-sm z-20 rotate-[-1deg] rounded-sm"></div>
+                        <div class="bg-blue-100 text-slate-800 p-8 shadow-[0_10px_20px_rgba(0,0,0,0.3)] transform rotate-1 transition-all duration-400 group-hover:rotate-0 group-hover:scale-110 group-hover:shadow-[0_25px_50px_rgba(0,0,0,0.5)] group-hover:z-30 min-h-[260px] flex flex-col justify-between rounded-br-[2rem]">
+                            <div>
+                                <h3 class="text-3xl font-bold mb-3 font-handwriting leading-tight">Participating The healing Algorithms</h3>
+                                <p class="text-slate-600 text-sm font-semibold">IIT Madras</p>
+                            </div>
+                            <div class="flex justify-between items-end mt-6 border-t border-blue-200 pt-4">
+                                <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Dec 2025</span>
+                                <i class="ph-fill ph-trophy text-3xl text-blue-500"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- NEW STICKY NOTE STARTS HERE -->
+                    <div class="relative group interactive-element cursor-pointer mt-4">
+                        <!-- Masking tape - change the rotate value to make it tilt differently -->
+                        <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-16 h-6 bg-white/30 backdrop-blur-sm shadow-sm z-20 rotate-[3deg] rounded-sm"></div>
+                        <!-- Note body - change 'bg-green-100' to any pastel color you want (e.g., orange-100, purple-100) -->
+                        <div class="bg-green-100 text-slate-800 p-8 shadow-[0_10px_20px_rgba(0,0,0,0.3)] transform -rotate-1 transition-all duration-400 group-hover:rotate-0 group-hover:scale-110 group-hover:shadow-[0_25px_50px_rgba(0,0,0,0.5)] group-hover:z-30 min-h-[260px] flex flex-col justify-between rounded-bl-[2rem]">
+                            <div>
+                                <h3 class="text-3xl font-bold mb-3 font-handwriting leading-tight">Cybersecurity Virtual Internship</h3>
+                                <p class="text-slate-600 text-sm font-semibold">Eduskills / paloalto Networks</p>
+                            </div>
+                            <!-- Bottom footer with date and icon -->
+                            <div class="flex justify-between items-end mt-6 border-t border-green-200 pt-4">
+                                <span class="text-xs font-bold uppercase tracking-wider text-slate-500">June 2026</span>
+                                <!-- You can find more icons at phosphoricons.com -->
+                                <i class="ph-fill ph-star text-3xl text-green-500"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- NEW STICKY NOTE ENDS HERE -->
+
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-32 bg-slate-900 relative fade-up border-t border-slate-800">
+            <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                <div class="flex flex-col lg:flex-row gap-16">
+                    
+                    <!-- Left Side: Contact Info -->
+                    <div class="lg:w-1/2">
+                        <div class="flex items-center gap-6 mb-8">
+                            <h2 class="text-4xl md:text-5xl font-black text-white tracking-tight">Let's Talk</h2>
+                            <div class="h-1 bg-slate-800 flex-grow rounded-full"></div>
+                        </div>
+                        <p class="text-xl text-slate-300 leading-relaxed mb-10">
+                            Interested in collaborating on a web project or have a role that fits my skills? Drop me a message and I'll get back to you as soon as possible.
+                        </p>
+                        <div class="space-y-6">
+                            <div class="flex items-center gap-4 text-slate-300 group">
+                                <div class="w-14 h-14 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-cyan-400 group-hover:bg-cyan-500 group-hover:text-slate-900 transition-colors shadow-sm">
+                                    <i class="ph-fill ph-envelope-simple text-2xl"></i>
+                                </div>
+                                <span class="text-lg font-medium tracking-wide">debasishpradhan236@gmail.com</span>
+                            </div>
+                            <div class="flex items-center gap-4 text-slate-300 group">
+                                <div class="w-14 h-14 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-cyan-400 group-hover:bg-cyan-500 group-hover:text-slate-900 transition-colors shadow-sm">
+                                    <i class="ph-fill ph-map-pin text-2xl"></i>
+                                </div>
+                                <span class="text-lg font-medium tracking-wide">Brahmapur, Odisha, India</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Side: Functional Form -->
+                    <div class="lg:w-1/2 relative">
+                        
+                        <!-- Success Message Overlay (Hidden by default) -->
+                        <div id="successMessage" class="hidden absolute inset-0 flex flex-col items-center justify-center bg-slate-900/95 backdrop-blur-md border border-cyan-500/30 rounded-3xl z-10 p-8 text-center shadow-2xl">
+                            <div class="w-20 h-20 bg-cyan-500/20 rounded-full flex items-center justify-center mb-6">
+                                <i class="ph-bold ph-check text-4xl text-cyan-400"></i>
+                            </div>
+                            <h3 class="text-3xl font-bold text-white mb-2">Message Sent!</h3>
+                            <p class="text-slate-300 mb-8">Thank you for reaching out. I'll get back to you shortly.</p>
+                            <button onclick="resetForm()" class="interactive-element px-8 py-3 bg-slate-800 border border-slate-700 text-white rounded-full font-bold hover:bg-slate-700 transition-colors">
+                                Send Another Message
+                            </button>
+                        </div>
+
+                        <!-- Form UI -->
+                        <!-- PRO TIP: To make this actually send emails to your inbox for free, 
+                             create an account at formspree.io and add action="https://formspree.io/f/YOUR_CODE" here -->
+                        <form id="contactForm" action="https://formspree.io/f/xkodwqpb" method="POST" class="bg-slate-800/40 p-8 md:p-10 rounded-3xl border border-slate-700 shadow-xl transition-all duration-300 relative">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                <div>
+                                    <label for="name" class="block text-sm font-semibold text-slate-400 mb-2">Your Name</label>
+                                    <input type="text" id="name" name="name" required class="interactive-element w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-colors placeholder:text-slate-600" placeholder="John Doe">
+                                </div>
+                                <div>
+                                    <label for="email" class="block text-sm font-semibold text-slate-400 mb-2">Your Email</label>
+                                    <input type="email" id="email" name="email" required class="interactive-element w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-colors placeholder:text-slate-600" placeholder="john@example.com">
+                                </div>
+                            </div>
+                            <div class="mb-6">
+                                <label for="subject" class="block text-sm font-semibold text-slate-400 mb-2">Subject</label>
+                                <input type="text" id="subject" name="subject" required class="interactive-element w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-colors placeholder:text-slate-600" placeholder="Project Inquiry">
+                            </div>
+                            <div class="mb-8">
+                                <label for="message" class="block text-sm font-semibold text-slate-400 mb-2">Message</label>
+                                <textarea id="message" name="message" rows="4" required class="interactive-element w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-colors resize-none placeholder:text-slate-600" placeholder="Tell me about your project..."></textarea>
+                            </div>
+                            
+                            <button type="submit" id="submitBtn" class="interactive-element w-full py-4 bg-cyan-500 hover:bg-cyan-400 text-slate-900 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-all shadow-[0_0_15px_rgba(6,182,212,0.4)] hover:shadow-[0_0_25px_rgba(6,182,212,0.6)] group">
+                                <i id="btnIcon" class="ph-bold ph-paper-plane-tilt group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform"></i>
+                                <i id="loadingIcon" class="ph-bold ph-spinner animate-spin hidden"></i>
+                                <span id="btnText">Send Message</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-10 text-center bg-slate-900 border-t border-slate-800">
+        <a href="#" class="font-mono text-sm font-bold text-slate-400 hover:text-cyan-400 transition-colors interactive-element">
+            Designed & Built by &lt;Your Name/&gt;
+        </a>
+        <p class="font-mono text-xs text-slate-600 mt-4">
+            &copy; <span id="year"></span> All rights reserved.
+        </p>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Custom Cursor Logic
+        const cursor = document.getElementById('custom-cursor');
+        const follower = document.getElementById('custom-cursor-follower');
+        const interactiveElements = document.querySelectorAll('.interactive-element, a, button, input, textarea');
+
+        if (window.matchMedia("(any-hover: hover)").matches) {
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+                follower.style.transform = `translate(${e.clientX - 14}px, ${e.clientY - 14}px)`;
+            });
+
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursor.classList.add('scale-[3]', 'bg-cyan-400/50');
+                    follower.classList.add('scale-150', 'border-indigo-400', 'opacity-50');
+                });
+                el.addEventListener('mouseleave', () => {
+                    cursor.classList.remove('scale-[3]', 'bg-cyan-400/50');
+                    follower.classList.remove('scale-150', 'border-indigo-400', 'opacity-50');
+                });
+            });
+        }
+
+        // Mobile Menu
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+            let icon = btn.querySelector('i');
+            if(menu.classList.contains('hidden')){
+                icon.classList.remove('ph-x');
+                icon.classList.add('ph-list');
+            } else {
+                icon.classList.remove('ph-list');
+                icon.classList.add('ph-x');
+            }
+        });
+
+        menu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+                btn.querySelector('i').classList.remove('ph-x');
+                btn.querySelector('i').classList.add('ph-list');
+            });
+        });
+
+        // Navbar & Scroll Spy
+        const navbar = document.getElementById('navbar');
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-links a');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.classList.add('shadow-2xl', 'py-1');
+            } else {
+                navbar.classList.remove('shadow-2xl', 'py-1');
+            }
+
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= (sectionTop - 250)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('text-slate-50');
+                link.classList.add('text-slate-400');
+                let span = link.querySelector('span');
+                if(span) span.classList.remove('w-full');
+                
+                if (link.getAttribute('href').includes(current) && current !== '') {
+                    link.classList.remove('text-slate-400');
+                    link.classList.add('text-slate-50');
+                    if(span) span.classList.add('w-full');
+                }
+            });
+        });
+
+        // Staggered Fade-up Animation Observer
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 100); 
+                    observer.unobserve(entry.target); 
+                }
+            });
+        }, observerOptions);
+        document.querySelectorAll('.fade-up').forEach((elem) => observer.observe(elem));
+
+        // Perfect Centered Projects Slider Logic
+        const track = document.getElementById('projectTrack');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        const getScrollAmount = () => {
+            const card = track.querySelector('.project-card');
+            // Card width + Gap (gap-8 is 32px)
+            return card.offsetWidth + 32; 
+        };
+
+        nextBtn.addEventListener('click', () => {
+            track.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+        });
+        prevBtn.addEventListener('click', () => {
+            track.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+        });
+
+        // Form Submission Logic
+        
+            const form = document.getElementById('contactForm');
+            form.addEventListener("submit", async function(e) {
+                e.preventDefault();
+                const btn = document.getElementById('submitBtn');
+                const btnText = document.getElementById('btnText');
+                const btnIcon = document.getElementById('btnIcon');
+                const loadingIcon = document.getElementById('loadingIcon');
+                const successMsg = document.getElementById('successMessage');
+            
+
+                btnText.textContent = "Sending...";
+                btnIcon.classList.add('hidden');
+                loadingIcon.classList.remove('hidden');
+                btn.disabled = true;
+                btn.classList.add('opacity-80', 'cursor-not-allowed');
+
+                const formData =new FormData(form);
+                try {
+
+                    const response = await fetch(form.action, {
+
+                        method: "POST",
+                        body: formData,
+                        headers: {
+                             Accept: "application/json"
+                        }
+                    });
+
+                    if (response.ok) {
+                        form.classList.add("invisible");
+                        successMsg.classList.remove("hidden");
+                        form.reset();
+                    }else {
+                         alert("❌ Failed to send message.");
+                    }
+                }catch (err) {
+                   alert("❌ Network error.");
+                }
+
+                btnText.textContent = "Send Message";
+                btnIcon.classList.remove("hidden");
+                loadingIcon.classList.add("hidden");
+                btn.disabled = false;
+                btn.classList.remove("opacity-80", "cursor-not-allowed");
+            });
+        
+
+        function resetForm() {
+            document.getElementById('contactForm').classList.remove('invisible');
+            document.getElementById('successMessage').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
